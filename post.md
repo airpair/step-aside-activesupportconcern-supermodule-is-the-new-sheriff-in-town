@@ -86,7 +86,7 @@ Add <code>require 'super_module'</code> at the top of your Ruby file
 ## Limitations and Caveats
 
  * SuperModule has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
- * A class or module mixing in SuperModule will suffer a marginal performance hit on first load into the Ruby environment. Afterward, class usage (instantiation and method invocation) will incurr no extra performance hits, running as fast as any other class. 
+ * Initial Ruby runtime load of a class or module mixing in SuperModule will incur a very marginal performance hit (in the order of nano-to-milliseconds). However, class usage (instantiation and method invocation) will not incur any performance hit, running as fast as any other Ruby class.
 
 ## How Does It Work?
 
