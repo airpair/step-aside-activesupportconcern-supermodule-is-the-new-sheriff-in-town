@@ -12,7 +12,7 @@ This succeeds ActiveSupport::Concern by offering lighter syntax and simpler modu
 To introduce SuperModule, here is a comparison of three different approaches for writing a
 UserIdentifiable module. 
 
-### 1) self.included(base)
+#### 1) self.included(base)
 
 >     module UserIdentifiable
 >       include ActiveModel::Model
@@ -38,7 +38,7 @@ UserIdentifiable module.
 
 This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). Therefore, this approach suffers from unnecessary complexity that hinders problem-solving flow; prevents developers from being DRY with boiler-plate code; and breaks expectations as per common object-oriented language conventions, discouraging companies from potentially including Ruby in a polyglot stack, such as Groupon's Ruby/Java/Node.js stack and SoundCloud's JRuby/Scala/Clojure stack.
 
-### 2) ActiveSupport::Concern
+#### 2) ActiveSupport::Concern
 
 >     module UserIdentifiable
 >       extend ActiveSupport::Concern
@@ -62,7 +62,7 @@ This is a lot to think about and process for simply wanting inclusion of class m
 
 A step forward that addresses the boiler-plate DRY concern, but is otherwise really just a lipstick on a pig.
 
-### 3) SuperModule
+#### 3) SuperModule
 
 >     module UserIdentifiable
 >       include SuperModule
