@@ -29,6 +29,7 @@ Add <code>require 'super_module'</code> at the top of your Ruby file
 
 >     module UserIdentifiable
 >       include SuperModule
+>       include ActiveModel::Model
 >
 >       belongs_to :user
 >       validates :user_id, presence: true
@@ -65,6 +66,27 @@ Add <code>require 'super_module'</code> at the top of your Ruby file
 >     Activity.last.slug
 >     ClubParticipation.create(club_id: club.id, user_id: user.id).slug
 >     CourseEnrollment.new(course_id: course.id).valid?
+
+## Glossary
+
+ * SuperModule: name of the library and Ruby module that provides functionality via mixin
+ * Super module: any Ruby module that mixes in SuperModule
+ * Class method definition: Ruby class or module method declared with <code>self.method_name</code> or <code>class << self</code>
+ * Class method invocation: Inherited Ruby class or module method invoked in the body of a class or module (e.g. <code>validates :username, presence: true</code>
+ * Code-time: Time of writing code in a Ruby file as opposed to Run-time
+ * Run-time: Time of executing Ruby code
+
+## Usage Details
+
+ * SuperModule must always be included at the top of a module's body at code-time
+ * SuperModule inclusion can be optionally followed by other basic or super module inclusions
+ * A super module can only be included in a class or another super module
+ * SuperModule adds <b>zero cost</b> to instantiation of including classes and invocation of included methods (both class and instance)
+
+## Limitations and Caveats
+
+ * SuperModule has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
+ * A class or module mixing in SuperModule will suffer a marginal performance hit on first load into the Ruby environment. Afterward, class usage (instantiation and method invocation) will incurr no extra performance hits, running as fast as any other class. 
 
 ## How Does It Work?
 
