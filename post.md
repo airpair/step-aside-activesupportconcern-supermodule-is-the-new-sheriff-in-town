@@ -86,19 +86,21 @@ SuperModule provides a simple conventional object-oriented approach that works s
 
 #### 1) Install and require gem
 
-<b>Using Bundler</b>
+<b>Using [Bundler](http://bundler.io/)</b>
 
 Add the following to Gemfile: <pre>gem 'super_module', '1.0.0'</pre>
-Run: <code>bundle</code>
 
-It will automatically get required in the application when loading with bundler (e.g. in a Rails application)
+And run the following command: <pre>bundle</pre>
 
-<b>Using RubyGem Directly</b>
+Afterwards, SuperModule will automatically get required in the application (e.g. a Rails application) and be ready for use.
 
-Run: <pre>gem install super_module</pre>
-(add <code>--no-ri --no-rdoc</code> if you wish to skip downloading them for a faster install)
+<b>Using [RubyGem](https://rubygems.org/gems/super_module) Directly</b>
 
-Add <code>require 'super_module'</code> at the top of your Ruby file
+Run the following command: <pre>gem install super_module</pre>
+
+(add <code>--no-ri --no-rdoc</code> if you wish to skip downloading documentation for a faster install)
+
+Add the following at the top of your Ruby file: <pre>require 'super_module'</pre>
 
 #### 2) Include SuperModule at the top of the module
 
