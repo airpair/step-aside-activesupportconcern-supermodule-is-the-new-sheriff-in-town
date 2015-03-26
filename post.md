@@ -86,7 +86,7 @@ module UserIdentifiable
 end
 ```
 
-[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, [SuperModule](https://rubygems.org/gems/super_module) collapses the difference between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make [Ruby](https://www.ruby-lang.org/en/) a more polyglot and beginner friendly language.
+[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, [SuperModule](https://rubygems.org/gems/super_module) collapses differences between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make [Ruby](https://www.ruby-lang.org/en/) a more polyglot and beginner friendly language.
 
 ## Instructions
 
