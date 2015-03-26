@@ -1,18 +1,18 @@
-Tired of Ruby's modules not allowing you to mix in class methods easily?
-Tired of writing complex code and using complex libraries like ActiveSupport::Concern to accomplish that goal?
+Tired of [Ruby](https://www.ruby-lang.org/en/)'s modules not allowing you to mix in class methods easily?
+Tired of writing complex code and using complex libraries like [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html) to accomplish that goal?
 
-Well, worry no more! SuperModule comes to the rescue!
+Well, worry no more! [SuperModule](https://rubygems.org/gems/super_module) comes to the rescue!
 
-SuperModule allows defining class methods and method invocations the same way a super class does without using def included(base).
+[SuperModule](https://rubygems.org/gems/super_module) allows defining class methods and method invocations the same way a super class does without using [`self.included(base)`](http://ruby-doc.org/core-2.2.1/Module.html#method-i-included).
 
-This succeeds ActiveSupport::Concern by offering lighter syntax and simpler module dependency support.
+This succeeds [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html) by offering lighter syntax and simpler module dependency support.
 
 ## Introductory Comparison
 
-To introduce SuperModule, here is a comparison of three different approaches for writing a
-UserIdentifiable module. 
+To introduce [SuperModule](https://rubygems.org/gems/super_module), here is a comparison of three different approaches for writing a
+<code>UserIdentifiable</code> module. 
 
-#### 1) self.included(base)
+#### 1) [`self.included(base)`](http://ruby-doc.org/core-2.2.1/Module.html#method-i-included)
 
 ```ruby
 module UserIdentifiable
@@ -38,9 +38,9 @@ module UserIdentifiable
 end
 ```
 
-This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). The unnecessary complexity gets in the way of problem-solving; slows down productivity with repetitive boiler-plate code; and breaks expectations set in other similar object-oriented languages, discouraging companies from including Ruby in a polyglot stack, such as [Groupon](http://www.groupon.com)'s Ruby/Java/Node.js stack and [SoundCloud](http://www.soundcloud.com)'s JRuby/Scala/Clojure stack.
+This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). The unnecessary complexity gets in the way of problem-solving; slows down productivity with repetitive boiler-plate code; and breaks expectations set in other similar object-oriented languages, discouraging companies from including [Ruby](https://www.ruby-lang.org/en/) in a polyglot stack, such as [Groupon](http://www.groupon.com)'s [Rails/JVM/Node.js](https://engineering.groupon.com/2013/misc/i-tier-dismantling-the-monoliths/) stack and [SoundCloud](http://www.soundcloud.com)'s [JRuby/Scala/Clojure stack](https://developers.soundcloud.com/blog/building-products-at-soundcloud-part-3-microservices-in-scala-and-finagle).
 
-#### 2) ActiveSupport::Concern
+#### 2) [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html)
 
 ```ruby
 module UserIdentifiable
@@ -66,7 +66,7 @@ end
 
 A step forward that addresses the boiler-plate DRY concern, but is otherwise really just lipstick on a pig.
 
-#### 3) SuperModule
+#### 3) [SuperModule](https://github.com/AndyObtiva/super_module)
 
 ```ruby
 module UserIdentifiable
@@ -86,7 +86,7 @@ module UserIdentifiable
 end
 ```
 
-SuperModule provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, SuperModule collapses the difference between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make Ruby a more polyglot and beginner friendly language.
+[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, [SuperModule](https://rubygems.org/gems/super_module) collapses the difference between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make [Ruby](https://www.ruby-lang.org/en/) a more polyglot and beginner friendly language.
 
 ## Instructions
 
@@ -98,7 +98,7 @@ Add the following to Gemfile: <pre>gem 'super_module', '1.0.0'</pre>
 
 And run the following command: <pre>bundle</pre>
 
-Afterwards, SuperModule will automatically get required in the application (e.g. a Rails application) and be ready for use.
+Afterwards, [SuperModule](https://rubygems.org/gems/super_module) will automatically get required in the application (e.g. a Rails application) and be ready for use.
 
 <b>Using [RubyGem](https://rubygems.org/gems/super_module) Directly</b>
 
@@ -106,9 +106,9 @@ Run the following command: <pre>gem install super_module</pre>
 
 (add <code>--no-ri --no-rdoc</code> if you wish to skip downloading documentation for a faster install)
 
-Add the following at the top of your Ruby file: <pre>require 'super_module'</pre>
+Add the following at the top of your [Ruby](https://www.ruby-lang.org/en/) file: <pre>require 'super_module'</pre>
 
-#### 2) Include SuperModule at the top of the module
+#### 2) Include [`SuperModule`](https://rubygems.org/gems/super_module) at the top of the module
 
 ```ruby
 module UserIdentifiable
@@ -156,7 +156,7 @@ ClubParticipation.create(club_id: club.id, user_id: user.id).slug
 CourseEnrollment.new(course_id: course.id).valid?
 ```
 
-## Glossary
+## Glossary and Definitions
 
  * SuperModule: name of the library and Ruby module that provides functionality via mixin
  * Super module: any Ruby module that mixes in SuperModule
@@ -185,7 +185,7 @@ end
 
 #### 1) Invoke super module class method calls on the including base class.
 
-For example, suppose we have a super module called Locatable:
+For example, suppose we have a super module called `Locatable`:
 
 ```ruby
 module Locatable
@@ -206,7 +206,7 @@ class Vehicle < ActiveRecord::Base
 end
 ```
 
-This first step guarantees invocation of the two Locatable <code>validates</code> method calls on the Vehicle object class.
+This first step guarantees invocation of the two `Locatable` <code>validates</code> method calls on the `Vehicle` object class.
 
 It does so by relying on <code>method_missing(method_name, *args, &block)</code> to record every class method call that happens in the super module class body, and later replaying those calls on the including base class during <code>self.included(base)</code> by using Ruby's <code>send(method_name, *args, &block)</code> method introspection.
 
@@ -239,15 +239,15 @@ The second step ensures that <code>merge_duplicates</code> is included in Contac
 
 It does so by recording every class method defined using the <code>self.singleton_method_added(method_name)</code> added hook, and then later replaying these class definitions on the including base class during invocation of <code>self.included(base)</code>.
 
-In order for to avoid interferance with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in SuperModule, such as <code>__super_module_class_method_calls</code>.
+In order for to avoid interferance with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in [SuperModule](https://rubygems.org/gems/super_module), such as <code>__super_module_class_method_calls</code>.
 
 ## Limitations and Caveats
 
- * SuperModule has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
+ * [SuperModule](https://rubygems.org/gems/super_module) has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
 
- * Initial Ruby runtime load of a class or module mixing in SuperModule will incur a very marginal performance hit (in the order of nano-to-milliseconds). However, class usage (instantiation and method invocation) will not incur any performance hit, running as fast as any other Ruby class.
+ * Initial Ruby runtime load of a class or module mixing in [SuperModule](https://rubygems.org/gems/super_module) will incur a very marginal performance hit (in the order of nano-to-milliseconds). However, class usage (instantiation and method invocation) will not incur any performance hit, running as fast as any other Ruby class.
 
- * Given SuperModule relies on <code>self.included(base)</code> in its implementation, if an including super module (or a super module including another super module) must hook into <code>self.included(base)</code> for meta-programming cases that require it, such as conditional `include` statements or method definitions, it would have to alias <code>self.included(base)</code> and then invoke the aliased version in every super module that needs it like in this example: 
+ * Given [SuperModule](https://rubygems.org/gems/super_module) relies on <code>self.included(base)</code> in its implementation, if an including super module (or a super module including another super module) must hook into <code>self.included(base)</code> for meta-programming cases that require it, such as conditional `include` statements or method definitions, it would have to alias <code>self.included(base)</code> and then invoke the aliased version in every super module that needs it like in this example: 
 ```ruby 
 module AdminIdentifiable
     include SuperModule
@@ -263,15 +263,15 @@ module AdminIdentifiable
         end
     end
 ```
-In the future, SuperModule could perhaps provide robust built-in facilities for allowing super modules to easily hook into <code>self.included(base)</code> without interferring with SuperModule behavior.
+In the future, [SuperModule](https://rubygems.org/gems/super_module) could perhaps provide robust built-in facilities for allowing super modules to easily hook into <code>self.included(base)</code> without interfering with [SuperModule](https://rubygems.org/gems/super_module) behavior.
 
- * Given SuperModule relies on <code>method_missing(method_name, *args, &block)</code> inside <code>class << self</code>, a super module including it that needs to do some additional <code>method_missing(method_name, *args, &block)</code> meta-programming must not only alias it, but also be mindful of implications on SuperModule behavior.
+ * Given [SuperModule](https://rubygems.org/gems/super_module) relies on <code>method_missing(method_name, *args, &block)</code> inside <code>class << self</code>, a super module including it that needs to do some additional <code>method_missing(method_name, *args, &block)</code> meta-programming must not only alias it, but also be mindful of implications on [SuperModule](https://rubygems.org/gems/super_module) behavior.
 
 ## Feedback and Contribution
 
 The library is written in a very clean and maintainable test-first approach, so you are welcome to read through the code on GitHub for more in-depth details:
 https://github.com/AndyObtiva/super_module 
 
-SuperModule is quite new and can use all the feedback and help it can get. So, please do not hestitate to add comments if you have any, and please fork [the project on GitHub](https://github.com/AndyObtiva/super_module#fork-destination-box) in order to [make contributions via Pull Requests](https://github.com/AndyObtiva/super_module/pulls).
+[SuperModule](https://rubygems.org/gems/super_module) is quite new and can use all the feedback and help it can get. So, please do not hesitate to add comments if you have any, and please fork [the project on GitHub](https://github.com/AndyObtiva/super_module#fork-destination-box) in order to [make contributions via Pull Requests](https://github.com/AndyObtiva/super_module/pulls).
 
-<i> Step aside ActiveSupport::Concern. [SuperModule](https://rubygems.org/gems/super_module) is the new sheriff in town!</i>
+<i> Step aside `ActiveSupport::Concern`. [SuperModule](https://rubygems.org/gems/super_module) is the new sheriff in town!</i>
