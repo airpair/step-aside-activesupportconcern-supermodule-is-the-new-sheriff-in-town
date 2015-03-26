@@ -38,7 +38,7 @@ module UserIdentifiable
 end
 ```
 
-This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). The unnecessary complexity gets in the way of problem-solving; slows down productivity with repetitive boiler-plate code; and breaks expectations set in other similar object-oriented languages, discouraging companies from including Ruby in a polyglot stack, such as Groupon's Ruby/Java/Node.js stack and SoundCloud's JRuby/Scala/Clojure stack.
+This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). The unnecessary complexity gets in the way of problem-solving; slows down productivity with repetitive boiler-plate code; and breaks expectations set in other similar object-oriented languages, discouraging companies from including Ruby in a polyglot stack, such as [Groupon](http://www.groupon.com)'s Ruby/Java/Node.js stack and [SoundCloud](http://www.soundcloud.com)'s JRuby/Scala/Clojure stack.
 
 #### 2) ActiveSupport::Concern
 
@@ -86,7 +86,7 @@ module UserIdentifiable
 end
 ```
 
-SuperModule provides a simple conventional object-oriented approach that works just as expected. Given that it collapses difference between having a base class extend a super class or include a super module, it encourages as a side benefit writing better Object-Oriented code and helps Ruby be more polyglot and beginner friendly.
+SuperModule provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, SuperModule collapses the difference between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make Ruby a more polyglot and beginner friendly language.
 
 ## Instructions
 
@@ -172,11 +172,6 @@ CourseEnrollment.new(course_id: course.id).valid?
  * A super module can only be included in a class or another super module
  * SuperModule adds <b>zero cost</b> to instantiation of including classes and invocation of included methods (both class and instance)
 
-## Limitations and Caveats
-
- * SuperModule has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
- * Initial Ruby runtime load of a class or module mixing in SuperModule will incur a very marginal performance hit (in the order of nano-to-milliseconds). However, class usage (instantiation and method invocation) will not incur any performance hit, running as fast as any other Ruby class.
-
 ## How Does It Work?
 
 Here is the general algorithm from the implementation:
@@ -188,7 +183,7 @@ def included(base)
 end
 ```
 
-#### 1) The first step ensures invoking super module class method calls from the base object that includes it.
+#### 1) Invoke super module class method calls on the including base class.
 
 For example, suppose we have a super module called Locatable:
 
@@ -213,7 +208,9 @@ end
 
 This first step guarantees invocation of the two Locatable <code>validates</code> method calls on the Vehicle object class.
 
-#### 2) The second step redefines super module class methods on the base class to simulate the effect of base.extend(super_module)
+It does so by relying on <code>method_missing(method_name, *args, &block)</code> to record every class method call that happens in the super module class body, and later replaying those calls on the including base class during <code>self.included(base)</code> by using Ruby's <code>send(method_name, *args, &block)</code> method introspection.
+
+#### 2) Defines super module class methods on the including base class
 
 For example, suppose we have a super module called Addressable:
 
@@ -240,7 +237,41 @@ end
 
 The second step ensures that <code>merge_duplicates</code> is included in Contact as a class method, allowing the call <code>Contact.merge_duplicates</code>
 
+It does so by recording every class method defined using the <code>self.singleton_method_added(method_name)</code> added hook, and then later replaying these class definitions on the including base class during invocation of <code>self.included(base)</code>.
+
+In order for to avoid interferance with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in SuperModule, such as <code>__super_module_class_method_calls</code>.
+
+## Limitations and Caveats
+
+ * SuperModule has been designed to be used only in the code definition of a module, not to be mixed in at run-time.
+
+ * Initial Ruby runtime load of a class or module mixing in SuperModule will incur a very marginal performance hit (in the order of nano-to-milliseconds). However, class usage (instantiation and method invocation) will not incur any performance hit, running as fast as any other Ruby class.
+
+ * Given SuperModule relies on <code>self.included(base)</code> in its implementation, if an including super module (or a super module including another super module) must hook into <code>self.included(base)</code> for meta-programming cases that require it, such as conditional `include` statements or method definitions, it would have to alias <code>self.included(base)</code> and then invoke the aliased version in every super module that needs it like in this example: 
+```ruby 
+module AdminIdentifiable
+    include SuperModule
+    include UserIdentifiable
+    
+    class << self
+        alias included_super_module included
+        def included(base)
+            included_super_module(base)
+            # do some extra work 
+            # like conditional inclusion of other modules
+            # or conditional definition of methods
+        end
+    end
+```
+In the future, SuperModule could perhaps provide robust built-in facilities for allowing super modules to easily hook into <code>self.included(base)</code> without interferring with SuperModule behavior.
+
+ * Given SuperModule relies on <code>method_missing(method_name, *args, &block)</code> inside <code>class << self</code>, a super module including it that needs to do some additional <code>method_missing(method_name, *args, &block)</code> meta-programming must not only alias it, but also be mindful of implications on SuperModule behavior.
+
+## Feedback and Contribution
+
 The library is written in a very clean and maintainable test-first approach, so you are welcome to read through the code on GitHub for more in-depth details:
 https://github.com/AndyObtiva/super_module 
+
+SuperModule is quite new and can use all the feedback and help it can get. So, please do not hestitate to add comments if you have any, and please fork [the project on GitHub](https://github.com/AndyObtiva/super_module#fork-destination-box) in order to [make contributions via Pull Requests](https://github.com/AndyObtiva/super_module/pulls).
 
 <i> Step aside ActiveSupport::Concern. [SuperModule](https://rubygems.org/gems/super_module) is the new sheriff in town!</i>
