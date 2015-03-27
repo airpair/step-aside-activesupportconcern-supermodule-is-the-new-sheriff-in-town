@@ -108,7 +108,7 @@ Run the following command: <pre>gem install super_module</pre>
 
 Add the following at the top of your [Ruby](https://www.ruby-lang.org/en/) file: <pre>require 'super_module'</pre>
 
-#### 2) Include [SuperModule](https://rubygems.org/gems/super_module) at the top of the module
+#### 2) Include SuperModule at the top of the module
 
 ```ruby
 module UserIdentifiable
