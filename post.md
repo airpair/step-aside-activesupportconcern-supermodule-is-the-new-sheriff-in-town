@@ -86,7 +86,7 @@ module UserIdentifiable
 end
 ```
 
-[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Given that for a base class, [SuperModule](https://rubygems.org/gems/super_module) collapses differences between extending a super class and including a super module, it encourages writing better Object-Oriented code as an added benefit, and helps make [Ruby](https://www.ruby-lang.org/en/) a more polyglot and beginner friendly language.
+[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Additionally, [SuperModule](https://rubygems.org/gems/super_module) collapses differences between extending a super class and including a super module, thus encouraging developers to write better Object-Oriented code, and making [Ruby](https://www.ruby-lang.org/en/) more polyglot and beginner friendly.
 
 ## Instructions
 
@@ -208,7 +208,7 @@ end
 
 This first step guarantees invocation of the two `Locatable` <code>validates</code> method calls on the `Vehicle` object class.
 
-It does so by relying on <code>method_missing(method_name, *args, &block)</code> to record every class method call that happens in the super module class body, and later replaying those calls on the including base class during <code>self.included(base)</code> by using Ruby's <code>send(method_name, *args, &block)</code> method introspection.
+It does so by relying on `method_missing(method_name, *args, &block)` to record every class method call that happens in the super module class body, and later replaying those calls on the including base class during `self.included(base)` by using Ruby's `send(method_name, *args, &block)` method introspection.
 
 #### 2) Defines super module class methods on the including base class
 
@@ -239,7 +239,7 @@ The second step ensures that <code>merge_duplicates</code> is included in Contac
 
 It does so by recording every class method defined using the <code>self.singleton_method_added(method_name)</code> added hook, and then later replaying these class definitions on the including base class during invocation of <code>self.included(base)</code>.
 
-In order for to avoid interferance with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in [SuperModule](https://rubygems.org/gems/super_module), such as <code>__super_module_class_method_calls</code>.
+In order to avoid interference with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in [SuperModule](https://rubygems.org/gems/super_module), such as <code>__super_module_class_method_calls</code>.
 
 ## Limitations and Caveats
 
@@ -269,9 +269,9 @@ In the future, [SuperModule](https://rubygems.org/gems/super_module) could perha
 
 ## Feedback and Contribution
 
-The library is written in a very clean and maintainable test-first approach, so you are welcome to read through the code on GitHub for more in-depth details:
+[SuperModule](https://rubygems.org/gems/super_module) is written in a very clean and maintainable test-first approach, so you are welcome to read through the code on GitHub for more in-depth details:
 https://github.com/AndyObtiva/super_module 
 
-[SuperModule](https://rubygems.org/gems/super_module) is quite new and can use all the feedback and help it can get. So, please do not hesitate to add comments if you have any, and please fork [the project on GitHub](https://github.com/AndyObtiva/super_module#fork-destination-box) in order to [make contributions via Pull Requests](https://github.com/AndyObtiva/super_module/pulls).
+The library is quite new and can use all the feedback and help it can get. So, please do not hesitate to add comments if you have any, and please fork [the project on GitHub](https://github.com/AndyObtiva/super_module#fork-destination-box) in order to [make contributions via Pull Requests](https://github.com/AndyObtiva/super_module/pulls).
 
 <i> Step aside `ActiveSupport::Concern`. [SuperModule](https://rubygems.org/gems/super_module) is the new sheriff in town!</i>
