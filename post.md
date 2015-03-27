@@ -12,7 +12,7 @@ This succeeds [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/Acti
 To introduce [SuperModule](https://rubygems.org/gems/super_module), here is a comparison of three different approaches for writing a
 <code>UserIdentifiable</code> module. 
 
-#### 1) [`self.included(base)`](http://ruby-doc.org/core-2.2.1/Module.html#method-i-included)
+#### 1) [self.included(base)](http://ruby-doc.org/core-2.2.1/Module.html#method-i-included)
 
 ```ruby
 module UserIdentifiable
@@ -40,7 +40,7 @@ end
 
 This is a lot to think about and process for simply wanting inclusion of class method definitions (like <code>most_active_user</code>) and class method invocations (like <code>belongs_to</code> and <code>validates</code>). The unnecessary complexity gets in the way of problem-solving; slows down productivity with repetitive boiler-plate code; and breaks expectations set in other similar object-oriented languages, discouraging companies from including [Ruby](https://www.ruby-lang.org/en/) in a polyglot stack, such as [Groupon](http://www.groupon.com)'s [Rails/JVM/Node.js](https://engineering.groupon.com/2013/misc/i-tier-dismantling-the-monoliths/) stack and [SoundCloud](http://www.soundcloud.com)'s [JRuby/Scala/Clojure stack](https://developers.soundcloud.com/blog/building-products-at-soundcloud-part-3-microservices-in-scala-and-finagle).
 
-#### 2) [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html)
+#### 2) [ActiveSupport::Concern](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html)
 
 ```ruby
 module UserIdentifiable
@@ -108,7 +108,7 @@ Run the following command: <pre>gem install super_module</pre>
 
 Add the following at the top of your [Ruby](https://www.ruby-lang.org/en/) file: <pre>require 'super_module'</pre>
 
-#### 2) Include [`SuperModule`](https://rubygems.org/gems/super_module) at the top of the module
+#### 2) Include [SuperModule](https://rubygems.org/gems/super_module) at the top of the module
 
 ```ruby
 module UserIdentifiable
@@ -239,7 +239,7 @@ The second step ensures that <code>merge_duplicates</code> is included in Contac
 
 It does so by recording every class method defined using the <code>self.singleton_method_added(method_name)</code> added hook, and then later replaying these class definitions on the including base class during invocation of <code>self.included(base)</code>.
 
-In order to avoid interference with existing class method definitions, there is an exception list for what not to record, such as <code>:included, :method_missing, :singleton_method_added</code> and any other "__" prefixed class methods defined in [SuperModule](https://rubygems.org/gems/super_module), such as <code>__super_module_class_method_calls</code>.
+In order to avoid interference with existing class method definitions, there is an exception list for what not to record, such as `included`, `method_missing`, `singleton_method_added`, and any other "`__`" prefixed class method defined in [SuperModule](https://rubygems.org/gems/super_module) (e.g. `__super_module_class_method_calls`).
 
 ## Limitations and Caveats
 
