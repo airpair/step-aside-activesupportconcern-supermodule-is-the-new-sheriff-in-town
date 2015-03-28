@@ -1,5 +1,5 @@
 Tired of [Ruby](https://www.ruby-lang.org/en/)'s modules not allowing you to mix in class methods easily?
-Tired of writing complex code and using complex libraries like [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html) to accomplish that goal?
+Tired of writing complex `self.included(base)` code or using over-engineered solutions like [`ActiveSupport::Concern`](http://api.rubyonrails.org/classes/ActiveSupport/Concern.html) to accomplish that goal?
 
 Well, worry no more! [SuperModule](https://rubygems.org/gems/super_module) comes to the rescue!
 
@@ -64,7 +64,7 @@ module UserIdentifiable
 end
 ```
 
-A step forward that addresses the boiler-plate DRY concern, but is otherwise really just lipstick on a pig.
+A step forward that addresses the boiler-plate repetitive code concern, but is otherwise really just lipstick on a pig. To explain more, developer problem solving and creativity flow is still disrupted by having to think about the lower-level mechanism of running code on inclusion (using `included`) and structuring class methods in an extra sub-module (`ClassMethods`) instead of simply declaring class methods like they normally would in Ruby and staying focused on the task at hand.
 
 #### 3) [SuperModule](https://github.com/AndyObtiva/super_module)
 
@@ -86,7 +86,11 @@ module UserIdentifiable
 end
 ```
 
-[SuperModule](https://github.com/AndyObtiva/super_module) provides a simple conventional object-oriented approach that works just as expected. Additionally, [SuperModule](https://rubygems.org/gems/super_module) collapses differences between extending a super class and including a super module, thus encouraging developers to write better Object-Oriented code, and making [Ruby](https://www.ruby-lang.org/en/) more polyglot and beginner friendly.
+With `include SuperModule` declared on top, developers can directly add class method invocations and definitions inside the module's body, and [`SuperModule`](https://github.com/AndyObtiva/super_module) takes care of automatically mixing them into classes that include the module.
+
+As a result, [SuperModule](https://rubygems.org/gems/super_module) collapses the difference between extending a super class and including a super module, thus encouraging developers to write simpler code while making better Object-Oriented Design decisions. 
+
+In other words, [SuperModule](https://rubygems.org/gems/super_module) furthers Ruby's goal of making programmers happy. 
 
 ## Instructions
 
